@@ -11,6 +11,7 @@ namespace Vector_Calculator
             
             // This should be 0, 4, 0
             Console.WriteLine(Vector.Add(test1, test2));
+            Console.WriteLine(Vector.Add(Vector.Scale(test1, 5), test2));
         }
     }
 }

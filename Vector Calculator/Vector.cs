@@ -17,7 +17,14 @@ namespace Vector_Calculator
             this.y = y;
             this.z = z;
         }
-
+        public static Vector operator *(Vector v, float s)
+        {
+            return new Vector(v.x * s, v.y * s, v.z * s);
+        }
+        public static Vector operator /(Vector v, float s)
+        {
+            return new Vector(v.x * 1/ s, v.y * 1/s, v.z * 1/s);
+        }
         public override string ToString()
         {
             return $"<{x}, {y}, {z}>";
@@ -32,7 +39,10 @@ namespace Vector_Calculator
         {
             return MathF.Atan(y / x);
         }
-
+        public static Vector Multiply(Vector v, float s)
+        {
+            return new Vector(v.x * s, v.y * s, v.z * s);
+        }
         public static Vector Add(Vector v1, Vector v2)
         {
             return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
@@ -40,7 +50,7 @@ namespace Vector_Calculator
 
         public static Vector Negate(Vector v)
         {
-            return new Vector(v.x * -1, v.y * -1, v.z * -1);
+            return Multiply(v, -1);
         }
 
         public static Vector Subtract(Vector v1, Vector v2)
@@ -48,9 +58,9 @@ namespace Vector_Calculator
             return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
         }
 
-        public static Vector Scale(Vector v, int s)
+        public static Vector Scale(Vector v, float s)
         {
-            return new Vector(v.x * s, v.y * s, v.z * s);
+            return Multiply(v, s);
         }
 
         public static Vector Normalize(Vector v)
@@ -60,26 +70,24 @@ namespace Vector_Calculator
 
         public static float DotProduct(Vector v1, Vector v2)
         {
-            // ADD CODE HERE, THEN REMOVE BELOW LINE
-            throw new NotImplementedException();
+            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
         }
 
         public static Vector CrossProduct(Vector v1, Vector v2)
         {
-            // ADD CODE HERE, THEN REMOVE BELOW LINE
-            throw new NotImplementedException();
+            return new Vector(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
         }
 
-        public static Vector AngleBetween(Vector v1, Vector v2)
+        public static float AngleBetween(Vector v1, Vector v2)
         {
-            // ADD CODE HERE, THEN REMOVE BELOW LINE
-            throw new NotImplementedException();
+            return (MathF.Acos(DotProduct(v1, v2) / (v1.GetMagnitude() * v2.GetMagnitude())) * 180/MathF.PI);
         }
 
         public static Vector ProjectOnto(Vector v1, Vector v2)
         {
-            // ADD CODE HERE, THEN REMOVE BELOW LINE
-            throw new NotImplementedException();
+            float stuff = v1.GetMagnitude() * v2.GetMagnitude() * MathF.Cos(AngleBetween(v1, v2));
+            float stuff2 = (DotProduct(v1, v2)) / MathF.Pow(v2.GetMagnitude(), 2);
+            return Multiply(v2, stuff2);
         }
     }
 }
